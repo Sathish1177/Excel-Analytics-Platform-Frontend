@@ -33,7 +33,7 @@ const Fileupload = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-gray-200 text-gray-800 rounded-lg shadow text-center border-4 border-dashed border-gray-400">
       <input
         type="file"
         accept=".xlsx, .xls"

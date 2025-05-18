@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import FileUpload from './components/File-uploading-component/Fileupload';
 import ChartVisualization from './components/ChartVisualization';
 import Home from './components/Home';
+import Login from './components/Login';
+import Dashboard from './components/DashBord-components/Dashboard';
+import './App.css';
 
 function App() {
   return (
@@ -25,6 +28,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/upload" element={<FileUpload />} />
             <Route path="/visualize" element={<ChartVisualization />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
@@ -34,4 +39,3 @@ function App() {
 }
 
 export default App;
-import './App.css';

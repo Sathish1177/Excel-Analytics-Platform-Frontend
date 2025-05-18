@@ -2,8 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FileUpload from './File-uploading-component/Fileupload';
 import ChartVisualization from './ChartVisualization';
+import { useNavigate } from 'react-router-dom';
+import RecentAnalysis from './RecentAnalysis';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gray-100">
       <nav className="bg-white shadow-lg">
@@ -13,6 +17,14 @@ const Home = () => {
               <div className="flex-shrink-0 flex items-center">
                 <h1 className="text-2xl font-bold text-gray-800">Excel Analytics Platform</h1>
               </div>
+            </div>
+            <div className="flex items-center">
+              <button
+                onClick={() => navigate('/login')}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+              >
+                Login
+              </button>
             </div>
           </div>
         </div>
@@ -33,19 +45,23 @@ const Home = () => {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4">Recent Analyses</h2>
-              <div className="space-y-4">
-                {/* Add your analysis history component here */}
-              </div>
+              <RecentAnalysis />
             </div>
 
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
               <div className="space-y-4">
-                <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-                  Download Latest Analysis
+                <button 
+                  onClick={() => navigate('/upload')}
+                  className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                >
+                  Upload New File
                 </button>
-                <button className="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors">
-                  Generate AI Summary
+                <button 
+                  onClick={() => navigate('/analysis')}
+                  className="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+                >
+                  View All Analyses
                 </button>
               </div>
             </div>
