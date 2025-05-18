@@ -1,7 +1,8 @@
 import express from 'express';
-import bcrypt from 'bcryptjs';
+// Remove unused bcrypt import since it's not being used in the code
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.post('/register', async (req, res) => {
         // Create new user
         user = new User({
             email,
-            password,
+            password
         });
 
         await user.save();
@@ -27,12 +28,13 @@ router.post('/register', async (req, res) => {
         // Create JWT
         const payload = {
             user: {
-                id: user.id,
-            },
+                id: user.id
+            }
         };
 
         jwt.sign(
             payload,
+            // eslint-disable-next-line no-undef
             process.env.JWT_SECRET,
             { expiresIn: '1h' },
             (err, token) => {
@@ -66,12 +68,13 @@ router.post('/login', async (req, res) => {
         // Create JWT
         const payload = {
             user: {
-                id: user.id,
-            },
+                id: user.id
+            }
         };
 
         jwt.sign(
             payload,
+            // eslint-disable-next-line no-undef
             process.env.JWT_SECRET,
             { expiresIn: '1h' },
             (err, token) => {
@@ -82,6 +85,17 @@ router.post('/login', async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
+    }
+});
+
+// Protected route example
+router.get('/me', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
 });
 

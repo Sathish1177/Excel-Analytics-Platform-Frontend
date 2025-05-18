@@ -1,26 +1,29 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
-import process from 'process';
+import analysisRoutes from './routes/analysis.js';
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
 
+// Middleware
 app.use(express.json());
 
-// MongoDB Connection
+// Connect to MongoDB
+// eslint-disable-next-line no-undef
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error('MongoDB Connection Error:', err));
-// Use Routes
-app.use('/api/auth', authRoutes);
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/analysis', analysisRoutes);
+
+// eslint-disable-next-line no-undef
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
